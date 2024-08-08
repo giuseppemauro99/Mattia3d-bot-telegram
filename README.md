@@ -1,6 +1,7 @@
 ## Description
 
-This project will start a container to post model from makerworld to a telegram channel
+This project will start a container to post model from makerworld to a telegram channel.
+The backend is written using Nodejs. Nodejs has an interface to call puppeteer that execute an automation browsing of the makerworld site and the evaluation of the page is sent to the telegram channel.
 
 
 ## Prerequisites

@@ -1,0 +1,17 @@
+services:
+  app:
+    env_file: "nodejs.env"
+    build:
+      context: app/
+      dockerfile: Dockerfile
+    volumes:
+      - ./app/utils.js:/app/utils.js
+      - ./app/server.js:/app/server.js
+      - ./app/puppeteer.js:/app/puppeteer.js
+      - type: bind
+        source: ./app/data
+        target: /app/data
+    working_dir: /app
+    #command: node server.js
+    ports:
+      - 8282:8282

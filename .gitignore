@@ -8,7 +8,7 @@ lerna-debug.log*
 .pnpm-debug.log*
 *.env
 app/data/sended_post.json
-app/screenshot
+app/screenshot/*
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json

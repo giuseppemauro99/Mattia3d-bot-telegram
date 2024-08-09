@@ -2,8 +2,8 @@
 
 const puppeteer = require('puppeteer');
 const axios = require('axios');
-const util = require('util');
 var fs = require('fs');
+const path = require("path");
 
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const CHAT_ID = '-1002240721880';
@@ -15,16 +15,21 @@ async function launchBrowser() {
   if (!browser) {
     console.log("Creating browser object");
     browser = await puppeteer.launch({
-      args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
+       args: [
+         '--no-sandbox',
+         '--disable-setuid-sandbox',
         '--disable-gpu'
-      ],
-      headless: 'new' // Enable new Headless mode
+       ],
+      headless: 'new'
     });
   }
 
   return browser;
+}
+
+async function cleanScreenshotFolder(){
+  console.log('Deleting screenshot folder');
+  fs.readdirSync('./screenshot').forEach(f => fs.rmSync(`./screenshot/${f}`));
 }
 
 async function testFunction() {
@@ -43,26 +48,53 @@ async function testFunction() {
   // Navigate to the specified URL
   await page.goto('https://makerworld.com/en/@ValeriaMomo', {waitUntil: 'load', timeout: 0});
 
-  // Take a screenshot of the page and save it to a file named 'example.png'
-  await page.screenshot({ path: 'example.png' });
+  await page.setViewport({
+    width: 1200,
+    height: 800
+  });
+  
+  await cleanScreenshotFolder();
+
+  console.log('Take screenshot example_wait1.png');
+  await page.screenshot({ path: 'screenshot/example_wait1.png', fullPage: true });
+  await page.waitForTimeout(5000);
+
+  console.log('Take screenshot example_wait2.png');
+  await page.screenshot({ path: 'screenshot/example_wait2.png', fullPage: true });
+  await page.waitForTimeout(5000);
+
+  console.log('Take screenshot example_wait3.png');
+  await page.screenshot({ path: 'screenshot/example_wait3.png', fullPage: true });
+  await page.waitForTimeout(5000);
+
+  console.log('Take screenshot example_wait4.png');
+  await page.screenshot({ path: 'screenshot/example_wait4.png', fullPage: true });
+  await page.waitForTimeout(5000);
 
   
   const AllModels = await page.evaluate(() =>{
     //Estrai tutte i box dedicati ai modelli
     let img = document.querySelectorAll('.gif-image.lazy.portal-css-1e5ufbu');
+    let links = document.querySelectorAll('a.link');
     objToSend = [];
 
+    let i = 0;
     for (const bx of img) {
-      let src = bx.getAttribute('src').trim();
-      let text = bx.getAttribute('alt').trim();
-      objToSend.push({src: src, text: text});
+      let imgsrc = bx.getAttribute('src').trim();
+      let title = bx.getAttribute('alt').trim();
+      let link = 'https://makerworld.com/' + links[i].getAttribute('href').trim();
+      objToSend.push({imgsrc: imgsrc, title: title, link: link});
+      i = i + 1;
     }
+
+    objToSend = objToSend.sort((a, b) => a.link > b.link ? 1 : -1);
+
     return objToSend;
   });
 
   // Log the array of links to the console
   console.log(JSON.stringify(AllModels, null, 4));
-  console.log('Trovati ' + AllModels.length + ' elementi');
+  console.log('Trovati ' + AllModels.length + ' elementi sul sito');
 
   //Leggi dal file
   let AlreadyPostedObj = [];
@@ -75,9 +107,10 @@ async function testFunction() {
 
   for (const model of AllModels) {
     //Se non è presente nei file già inviati
-    if(AlreadyPostedObj.find(x => x.src == model.src) == undefined){
-      console.log('Oggetto: ' + model.src + ' ' + model.text + ' non presente nei file già inviati, devo inviarlo');
-      await sendMsgOnTelegram(model.src, model.text);
+    if(AlreadyPostedObj.find(x => x.link == model.link) == undefined){
+      console.log('Oggetto: ' + model.link + '' + model.imgsrc + ' ' + model.title + ' non presente nei file già inviati, devo inviarlo');
+      //await sendMsgOnTelegramWithPhoto(model.imgsrc, model.text);
+      await sendMsgOnTelegram (model.title + ' ' + model.link);
     }
   }
 
@@ -94,7 +127,7 @@ async function testFunction() {
   console.log('Extraction and sent on telegram was successful.');
 }
 
-async function sendMsgOnTelegram(photoUrl, caption){
+async function sendMsgOnTelegramWithPhoto(photoUrl, caption){
   const telegramUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`;
 
   try {
@@ -107,6 +140,21 @@ async function sendMsgOnTelegram(photoUrl, caption){
       console.log('Foto inviata con successo');
   } catch (error) {
       console.error('Errore nell\'invio della foto a Telegram:', error.response ? error.response.data : error.message);
+  }
+}
+
+async function sendMsgOnTelegram(text){
+  const telegramUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+
+  try {
+    const response = await axios.post(telegramUrl, {
+        chat_id: CHAT_ID,
+        text: text
+    });
+
+    console.log('Messaggio inviato con successo');
+  } catch (error) {
+      console.error('Errore nell\'invio del messaggio a Telegram:', error.response ? error.response.data : error.message);
   }
 }
 

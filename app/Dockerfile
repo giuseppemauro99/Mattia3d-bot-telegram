@@ -29,5 +29,7 @@ EXPOSE 8282
 # Add a /app/sended_post.js volume
 VOLUME ["/app/data"]
 
+VOLUME ["/app/screenshot"]
+
 # Run your application when container launches
 CMD [ "node", "server.js" ]

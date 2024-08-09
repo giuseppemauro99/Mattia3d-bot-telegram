@@ -11,6 +11,9 @@ services:
       - type: bind
         source: ./app/data
         target: /app/data
+      - type: bind
+        source: ./app/screenshot
+        target: /app/screenshot
     working_dir: /app
     #command: node server.js
     ports:

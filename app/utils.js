@@ -74,7 +74,7 @@ async function testFunction() {
   
   const AllModels = await page.evaluate(() =>{
     //Estrai tutte i box dedicati ai modelli
-    let img = document.querySelectorAll('.gif-image.lazy.portal-css-1e5ufbu');
+    let img = document.querySelectorAll('.gif-image .lazy .mw-css-13lcuk6');
     let links = document.querySelectorAll('a.link');
     objToSend = [];
 

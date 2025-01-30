@@ -82,7 +82,7 @@ async function testFunction() {
     for (const bx of img) {
       let imgsrc = bx.getAttribute('src').trim();
       let title = bx.getAttribute('alt').trim();
-      let link = 'https://makerworld.com/' + links[i].getAttribute('href').trim();
+      let link = 'https://makerworld.com/' + links[i].getAttribute('src').trim();
       objToSend.push({imgsrc: imgsrc, title: title, link: link});
       i = i + 1;
     }

@@ -74,8 +74,10 @@ async function testFunction() {
   
   const AllModels = await page.evaluate(() =>{
     //Estrai tutte i box dedicati ai modelli
-    let img = document.querySelectorAll('.gif-image.lazy.mw-css-13lcuk6');
-    let links = document.querySelectorAll('a.link');
+    
+    let img = document.querySelectorAll('.gif-image.lazy.mw-css-13lcuk6');//prendo tutte le immagini
+    //Prendo tutti i link associati alle immagini
+    let links = document.querySelectorAll('a.MuiTypography-root.MuiTypography-inherit.MuiLink-root.MuiLink-underlineHover.mw-css-1hsg6i1');
     objToSend = [];
 
     let i = 0;

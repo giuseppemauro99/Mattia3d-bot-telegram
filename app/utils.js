@@ -81,6 +81,7 @@ async function testFunction() {
     objToSend = [];
 
     let i = 0;
+    let limit = links.length;
     for (const bx of img) {
       if (i >= limit) break; // Stop the loop if we exceed the limit
 

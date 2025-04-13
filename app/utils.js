@@ -77,7 +77,7 @@ async function testFunction() {
     
     let img = document.querySelectorAll('.gif-image.lazy.mw-css-13lcuk6');//prendo tutte le immagini
     //Prendo tutti i link associati alle immagini
-    let links = document.querySelectorAll('a.MuiTypography-root.MuiTypography-inherit.MuiLink-root.MuiLink-underlineHover.mw-css-1hsg6i1');
+    let links = document.querySelectorAll('a.mw-css-17fmdp3');
     objToSend = [];
 
     let i = 0;

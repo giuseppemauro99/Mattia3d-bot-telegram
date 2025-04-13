@@ -22,6 +22,6 @@ Before using this Docker Compose setup, ensure that you have Docker and Docker C
 
 4. Access the application:
 
-   Once the containers are up and running, you can access the Puppeteer application by opening your web browser and navigating to [http://localhost:8080](http://localhost:8282).
+   Once the containers are up and running, you can access the Puppeteer application by opening your web browser and navigating to [http://localhost:8282](http://localhost:8282).
 
    You should see the output of your Puppeteer application or any other defined behavior.

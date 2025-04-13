@@ -9,16 +9,10 @@ WORKDIR /app
 #COPY package*.json ./
 COPY package.json ./
 
+RUN rm package-lock.json
 
 RUN yarn config set loglevel info
-#RUN npm config set loglevel info
-#RUN npm config set registry http://registry.npmjs.org/
-#RUN npm set progress=false 
-
-# Install puppeteer, don't install Chromium as it will be installed manually later
-#RUN yarn add puppeteer --no-install-recommends
-RUN yarn add axios
-RUN yarn add express
+RUN yarn install
 
 # Copy app source to Docker environment
 COPY . .

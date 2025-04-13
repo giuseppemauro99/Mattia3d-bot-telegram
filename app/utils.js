@@ -57,19 +57,19 @@ async function testFunction() {
 
   console.log('Take screenshot example_wait1.png');
   await page.screenshot({ path: 'screenshot/example_wait1.png', fullPage: true });
-  await page.waitForTimeout(5000);
+  await new Promise(r => setTimeout(r, 5000));
 
   console.log('Take screenshot example_wait2.png');
   await page.screenshot({ path: 'screenshot/example_wait2.png', fullPage: true });
-  await page.waitForTimeout(5000);
+  await new Promise(r => setTimeout(r, 5000));
 
   console.log('Take screenshot example_wait3.png');
   await page.screenshot({ path: 'screenshot/example_wait3.png', fullPage: true });
-  await page.waitForTimeout(5000);
+  await new Promise(r => setTimeout(r, 5000));
 
   console.log('Take screenshot example_wait4.png');
   await page.screenshot({ path: 'screenshot/example_wait4.png', fullPage: true });
-  await page.waitForTimeout(5000);
+  await new Promise(r => setTimeout(r, 5000));
 
   
   const AllModels = await page.evaluate(() =>{
@@ -87,7 +87,7 @@ async function testFunction() {
 
       let imgsrc = bx.getAttribute('src').trim();
       let title = bx.getAttribute('alt').trim();
-      
+
       let link = 'https://makerworld.com/' + links[i].getAttribute('href').trim();
       objToSend.push({imgsrc: imgsrc, title: title, link: link});
       i = i + 1;
@@ -116,7 +116,7 @@ async function testFunction() {
     if(AlreadyPostedObj.find(x => x.link == model.link) == undefined){
       console.log('Oggetto: ' + model.link + '' + model.imgsrc + ' ' + model.title + ' non presente nei file già inviati, devo inviarlo');
       //await sendMsgOnTelegramWithPhoto(model.imgsrc, model.text);
-      await sendMsgOnTelegram (model.title + ' ' + model.link);
+      //await sendMsgOnTelegram (model.title + ' ' + model.link);
     }
   }
 

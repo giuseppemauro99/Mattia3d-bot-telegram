@@ -82,8 +82,11 @@ async function testFunction() {
 
     let i = 0;
     for (const bx of img) {
+      if (i >= limit) break; // Stop the loop if we exceed the limit
+
       let imgsrc = bx.getAttribute('src').trim();
       let title = bx.getAttribute('alt').trim();
+      
       let link = 'https://makerworld.com/' + links[i].getAttribute('href').trim();
       objToSend.push({imgsrc: imgsrc, title: title, link: link});
       i = i + 1;

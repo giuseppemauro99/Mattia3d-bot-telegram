@@ -87,7 +87,7 @@ async function testFunction() {
 
       let imgsrc = bx.getAttribute('src').trim();
       //let title = bx.getAttribute('alt').trim();
-      let title = "";
+      let title = ""; //tanto non lo uso più il titolo, mando direttamente il link come messaggio
       
       let link = 'https://makerworld.com/' + links[i].getAttribute('href').trim();
       objToSend.push({imgsrc: imgsrc, title: title, link: link});
@@ -116,8 +116,8 @@ async function testFunction() {
     //Se non è presente nei file già inviati
     if(AlreadyPostedObj.find(x => x.link == model.link) == undefined){
       console.log('Oggetto: ' + model.link + '' + model.imgsrc + ' ' + model.title + ' non presente nei file già inviati, devo inviarlo');
-      //await sendMsgOnTelegramWithPhoto(model.imgsrc, model.text);
-      await sendMsgOnTelegram (model.title + ' ' + model.link);
+      //await sendMsgOnTelegram(model.title + ' ' + model.link);
+      await sendMsgOnTelegram(model.link);
     }
   }
 
@@ -132,22 +132,6 @@ async function testFunction() {
   await page.close();
 
   console.log('Extraction and sent on telegram was successful.');
-}
-
-async function sendMsgOnTelegramWithPhoto(photoUrl, caption){
-  const telegramUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`;
-
-  try {
-      const response = await axios.post(telegramUrl, {
-          chat_id: CHAT_ID,
-          photo: photoUrl,
-          caption: caption
-      });
-
-      console.log('Foto inviata con successo');
-  } catch (error) {
-      console.error('Errore nell\'invio della foto a Telegram:', error.response ? error.response.data : error.message);
-  }
 }
 
 async function sendMsgOnTelegram(text){

@@ -86,7 +86,8 @@ async function testFunction() {
       if (i >= limit) break; // Stop the loop if we exceed the limit
 
       let imgsrc = bx.getAttribute('src').trim();
-      let title = bx.getAttribute('alt').trim();
+      //let title = bx.getAttribute('alt').trim();
+      let title = "";
       
       let link = 'https://makerworld.com/' + links[i].getAttribute('href').trim();
       objToSend.push({imgsrc: imgsrc, title: title, link: link});

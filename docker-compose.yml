@@ -1,5 +1,5 @@
 services:
-  app:
+  mattia3d-app:
     env_file: "nodejs.env"
     build:
       context: app/
@@ -18,3 +18,7 @@ services:
     #command: node server.js
     ports:
       - 8282:8282
+
+networks:
+  mattia3d-net:
+    driver: bridge

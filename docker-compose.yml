@@ -18,6 +18,8 @@ services:
     #command: node server.js
     ports:
       - 8282:8282
+    networks:
+      - mattia3d-net
 
 networks:
   mattia3d-net:
